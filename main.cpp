@@ -8,12 +8,18 @@
 
 void startGame();
 
-void shuffleCards();
+std::vector<std::string> shuffleCards();
+
+void dealCards(std::vector<std::string> array);
 
 
 int main() {
  startGame();
- shuffleCards();
+ auto shuffled = shuffleCards();
+ // for(std::string i : shuffled) {
+ //  std::cout << i << std::endl;
+ // }
+ dealCards(shuffled);
  return 0;
 }
 
@@ -29,7 +35,7 @@ void startGame() {
  std::cin >> nameTwo;
 }
 
-void shuffleCards() {
+std::vector<std::string> shuffleCards() {
  srand(time(0));
  int random = rand() % 52;
  std::vector<std::string> suits = {"Spades", "Clubs", "Hearts", "Diamonds"};
@@ -43,4 +49,36 @@ void shuffleCards() {
  }
  int seed = std::chrono::system_clock::now().time_since_epoch().count();
  std::shuffle(allRandomCards.begin(), allRandomCards.end(), std::default_random_engine(seed));
+
+ return allRandomCards;
+}
+
+template<typename T>
+void slice(std::vector<T> &v, int m, int n)
+{
+    int k = n - m + 1;
+ 
+    auto it = v.cbegin() + m;
+    while (it != v.cend() && k--) {
+        it = v.erase(it);
+    }
+}
+
+
+void dealCards(std::vector<std::string> array) {
+    std::vector<std::string> v = array;
+    std::vector<std::string> w = array;
+    int m = 0, n = 25;
+    int o = 26, p = 52;
+    slice(v, m, n);
+    slice(w, o, p);
+
+ 
+    for (std::string const &i: v) {
+        std::cout << i << std::endl;
+    }
+
+     for (std::string const &i: w) {
+        std::cout << i << std::endl;
+    }
 }
