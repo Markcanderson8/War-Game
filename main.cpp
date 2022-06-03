@@ -5,13 +5,17 @@
 #include <ctime>
 #include <algorithm>
 #include <chrono>
+#include <queue>
 
 void startGame();
 
 std::vector<std::string> shuffleCards();
 
-void dealCards(std::vector<std::string> array);
+std::queue<std::string> dealCardsOne(std::vector<std::string> array);
+std::queue<std::string> dealCardsTwo(std::vector<std::string> array);
 
+std::queue<std::string> playerOneCards(std::vector<std::string> array);
+std::queue<std::string> playerTwoCards(std::vector<std::string> array);
 
 int main() {
  startGame();
@@ -19,7 +23,11 @@ int main() {
  // for(std::string i : shuffled) {
  //  std::cout << i << std::endl;
  // }
- dealCards(shuffled);
+ auto player1 = dealCardsOne(shuffled);
+ auto player2 = dealCardsTwo(shuffled);
+
+ 
+
  return 0;
 }
 
@@ -65,20 +73,30 @@ void slice(std::vector<T> &v, int m, int n)
 }
 
 
-void dealCards(std::vector<std::string> array) {
+std::queue<std::string> dealCardsOne(std::vector<std::string> array) {
     std::vector<std::string> v = array;
-    std::vector<std::string> w = array;
     int m = 0, n = 25;
-    int o = 26, p = 52;
     slice(v, m, n);
-    slice(w, o, p);
 
- 
-    for (std::string const &i: v) {
-        std::cout << i << std::endl;
-    }
+    std::queue<std::string> player1 = playerOneCards(v);
+    return player1;
+}
 
-     for (std::string const &i: w) {
-        std::cout << i << std::endl;
-    }
+std::queue<std::string> dealCardsTwo(std::vector<std::string> array) {
+    std::vector<std::string> v = array;
+    int m = 26, n = 52;
+    slice(v, m, n);
+
+    std::queue<std::string> player2 = playerTwoCards(v);
+    return player2;
+}
+
+std::queue<std::string> playerOneCards(std::vector<std::string> array) {
+ std::queue<std::string, std::deque<std::string>> q(std::deque<std::string>(array.begin(), array.end()));
+ return q; // returns a queue from a string array 
+}
+
+std::queue<std::string> playerTwoCards(std::vector<std::string> array) {
+ std::queue<std::string, std::deque<std::string>> q(std::deque<std::string>(array.begin(), array.end()));
+ return q; // returns a queue from a string array 
 }
