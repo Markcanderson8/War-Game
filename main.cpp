@@ -1,7 +1,10 @@
 #include <iostream>
 #include <random>
-#include <array>
-
+#include <vector>
+#include <map>
+#include <ctime>
+#include <algorithm>
+#include <chrono>
 
 void startGame();
 
@@ -27,9 +30,21 @@ void startGame() {
 }
 
 void shuffleCards() {
- std::array<std::string, 4> suits = {"Spades", "Clubs", "Hearts", "Diamonds"};
- std::array<std::string, 13> cardValues = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+ srand(time(0));
+ int random = rand() % 52;
+ std::vector<std::string> suits = {"Spades", "Clubs", "Hearts", "Diamonds"};
+ std::vector<std::string> cardValues = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+ std::vector<std::string> allRandomCards = {};
+
  for(int i = 0; i < suits.size(); i++) {
-   std::cout << suits[i] << std::endl;
+   for(int j = 0; j < cardValues.size(); j++) {
+     allRandomCards.push_back(cardValues[j] + " of " + suits[i]);
+   }
+ }
+ int seed = std::chrono::system_clock::now().time_since_epoch().count();
+ std::shuffle(allRandomCards.begin(), allRandomCards.end(), std::default_random_engine(seed));
+
+ for(int i = 0; i < allRandomCards.size(); i++) {
+  std::cout << allRandomCards[i] << std::endl;
  }
 }
