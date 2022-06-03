@@ -43,8 +43,4 @@ void shuffleCards() {
  }
  int seed = std::chrono::system_clock::now().time_since_epoch().count();
  std::shuffle(allRandomCards.begin(), allRandomCards.end(), std::default_random_engine(seed));
-
- for(int i = 0; i < allRandomCards.size(); i++) {
-  std::cout << allRandomCards[i] << std::endl;
- }
 }
