@@ -6,16 +6,13 @@
 #include <algorithm>
 #include <chrono>
 #include <queue>
+#include <sstream>
 
 void startGame();
 
 std::vector<std::string> shuffleCards();
 
-std::queue<std::string> dealCardsOne(std::vector<std::string> array);
-std::queue<std::string> dealCardsTwo(std::vector<std::string> array);
 
-std::queue<std::string> playerOneCards(std::vector<std::string> array);
-std::queue<std::string> playerTwoCards(std::vector<std::string> array);
 
 int main() {
  startGame();
@@ -23,10 +20,7 @@ int main() {
  // for(std::string i : shuffled) {
  //  std::cout << i << std::endl;
  // }
- auto player1 = dealCardsOne(shuffled);
- auto player2 = dealCardsTwo(shuffled);
 
- 
 
  return 0;
 }
@@ -61,42 +55,4 @@ std::vector<std::string> shuffleCards() {
  return allRandomCards;
 }
 
-template<typename T>
-void slice(std::vector<T> &v, int m, int n)
-{
-    int k = n - m + 1;
- 
-    auto it = v.cbegin() + m;
-    while (it != v.cend() && k--) {
-        it = v.erase(it);
-    }
-}
 
-
-std::queue<std::string> dealCardsOne(std::vector<std::string> array) {
-    std::vector<std::string> v = array;
-    int m = 0, n = 25;
-    slice(v, m, n);
-
-    std::queue<std::string> player1 = playerOneCards(v);
-    return player1;
-}
-
-std::queue<std::string> dealCardsTwo(std::vector<std::string> array) {
-    std::vector<std::string> v = array;
-    int m = 26, n = 52;
-    slice(v, m, n);
-
-    std::queue<std::string> player2 = playerTwoCards(v);
-    return player2;
-}
-
-std::queue<std::string> playerOneCards(std::vector<std::string> array) {
- std::queue<std::string, std::deque<std::string>> q(std::deque<std::string>(array.begin(), array.end()));
- return q; // returns a queue from a string array 
-}
-
-std::queue<std::string> playerTwoCards(std::vector<std::string> array) {
- std::queue<std::string, std::deque<std::string>> q(std::deque<std::string>(array.begin(), array.end()));
- return q; // returns a queue from a string array 
-}
